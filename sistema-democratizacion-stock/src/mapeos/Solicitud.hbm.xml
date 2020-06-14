@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="datos.Solicitud" table="solicitud">
+		<id column="id_solicitud" name="idSolicitud">
+			<generator class="identity" />
+		</id>
+		<property column="estado" name="estado" type="string" />
+		<property column="fecha_solicitud" name="fechaSolicitud" type="LocalDate"/>
+
+		<many-to-one name="localSolicitante" class="datos.Local"
+			column="local_solicitante" not-null="true" />
+		<many-to-one name="localSolicitado" class="datos.Local"
+			column="local_solicitado" not-null="true" />
+		<many-to-one name="empleadoSolicitante"
+			class="datos.Empleado" column="empleado_solicitante" not-null="true" />
+		<many-to-one name="empleadoSolicitado"
+			class="datos.Empleado" column="empleado_solicitado" not-null="false" />
+
+		<set name="lineasSolicitud" table="linea_solicitud" inverse="true"
+			lazy="true" fetch="select">
+			<key column="solicitud" not-null="true" />
+			<one-to-many class="datos.LineaSolicitud" />
+		</set>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="datos.Lote" table="lote">
+		<id column="id_lote" name="idLote">
+			<generator class="identity"/>
+		</id>
+		<property column="cantidad_disponible" name="cantidadDisponible" type="int"/>
+		<property column="cantidad_inicial" name="cantidadInicial" type="int"/>
+		<property column="fecha_ingreso" name="fechaIngreso" type="date"/>
+		
+		<many-to-one name="producto" class="datos.Producto"
+			column="producto" not-null="true"/>
+		
+	</class>
+</hibernate-mapping>

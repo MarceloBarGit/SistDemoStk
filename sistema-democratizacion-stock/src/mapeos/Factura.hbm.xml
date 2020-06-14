@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="datos.Factura" table="factura">
+		<id column="id_factura" name="idFactura">
+			<generator class="identity" />
+		</id>
+		<property column="nro_documento" name="nroDocumento"
+			type="string" />
+		<property column="total" name="total" type="float" />
+		<property column="fecha_factura" name="fechaFactura" type="LocalDate"/>
+
+		<many-to-one name="local" class="datos.Local"
+			column="local" not-null="true" />
+		<many-to-one name="cliente" class="datos.Cliente"
+			column="cliente" not-null="true" />
+		<many-to-one name="vendedor" class="datos.Empleado"
+			column="vendedor" not-null="true" />
+		<many-to-one name="solicitudAsociada" class="datos.Solicitud" 
+			column="solicitud_asociada" not-null="false" />
+		<set name="lineasFactura" table="linea_factura" inverse="true"
+			lazy="true" fetch="select">
+			<key column="factura" not-null="true" />
+			<one-to-many class="datos.LineaFactura" />
+		</set>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="datos.Persona" table="persona">
+		<id column="id_persona" name="idPersona">
+			<generator class="identity"/>
+		</id>
+		<property column="nombre" name="nombre" type="string"/>
+		<property column="apellido" name="apellido" type="string"/>
+		<property column="dni" name="dni" type="string"/>
+		<property column="fecha_nacimiento" name="fechaNacimiento" type="LocalDate"/>
+
+		<many-to-one name="contacto" class="datos.Contacto"
+			column="contacto" not-null="true" cascade="save-update, delete"/>
+
+		<joined-subclass name="datos.Cliente" table="cliente">
+			<key column="idCliente"/>
+			<property column="mail" name="mailCliente" type="string"/>
+			<property column="cuit" name="cuitCliente" type="string"/>
+		</joined-subclass>
+
+		<joined-subclass name="datos.Empleado" table="empleado">
+			<key column="idEmpleado"/>
+			<property column="legajo" name="legajo" type="string"/>
+			<property column="suedo_base" name="sueldoBase" type="float"/>
+			<property column="username" name="username" type="string"/>
+			<property column="password" name="password" type="string"/>
+	
+			<many-to-one name="contacto" class="datos.Contacto"
+				column="contacto" not-null="true" cascade="save-update, delete"/>
+			<many-to-one name="rol" class="datos.Rol" column="rol"
+				not-null="true"/>
+			<many-to-one name="franjaHoraria"
+				class="datos.FranjaHoraria" column="franja_horaria" not-null="true" />
+			
+			<set name="solicitudesRealizadas" table="solicitud" inverse="true" lazy="true" fetch="select">
+				<key column="empleado_solicitante" not-null="true"/>
+				<one-to-many class="datos.Solicitud"/>
+			</set>
+			<set name="solicitudesAprobadas" table="solicitud" inverse="true" lazy="true" fetch="select">
+				<key column="empleado_solicitado" not-null="false"/>
+				<one-to-many class="datos.Solicitud"/>
+			</set>
+			<set name="facturas" table="factura" inverse="true" lazy="true" fetch="select">
+				<key column="vendedor" not-null="true"/>
+				<one-to-many class="datos.Factura"/>
+			</set>
+		</joined-subclass>
+
+	</class>
+</hibernate-mapping>

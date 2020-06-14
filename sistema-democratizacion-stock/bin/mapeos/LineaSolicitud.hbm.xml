@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="datos.LineaSolicitud" table="linea_solicitud">
+		<id column="id_solicitud" name="idSolicitud">
+			<generator class="identity"/>
+		</id>
+		<property column="cantidad" name="cantidad" type="int"/>
+		<property column="total" name="total" type="float"/>
+		
+		<many-to-one name="producto" class="datos.Producto"
+			column="producto" not-null="true"/>
+		
+	</class>
+</hibernate-mapping>

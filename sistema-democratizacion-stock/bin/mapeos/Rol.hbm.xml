@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="datos.Rol" table="rol">
+		<id column="idRol" name="idRol">
+			<generator class="identity"/>
+		</id>
+     <!-- CAMPOS -->
+		<property column="descripcionRol" name="descripcionRol" type="string"/>
+     
+     <!-- RELACION -->
+		<set table="PermisoAcceso_x_Rol" name="permisos" outer-join="true">
+			<key column="idRol"/>
+			<many-to-many column="idPermisoAcceso" class="datos.PermisoAcceso"/>
+		</set>
+	</class>
+</hibernate-mapping>
